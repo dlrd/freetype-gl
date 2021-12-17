@@ -92,7 +92,7 @@ if(NOT MINGW AND (WIN32 OR WIN64))
 endif()
 
 find_package(OpenGL REQUIRED)
-find_package(Freetype REQUIRED)
+# find_package(Freetype REQUIRED) #Smode Tech avoid auto include
 
 if(freetype-gl_WITH_GLEW)
     find_package(GLEW REQUIRED)
