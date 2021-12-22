@@ -88,7 +88,7 @@ texture_glyph_clone(texture_glyph_t* self)
         source = *(float**)vector_get(self->kerning, i);
         target = (float**)vector_get(new_glyph->kerning, i);
         *target = calloc(0x100, sizeof(float));
-        memcpy(*target, source, 0x100);
+        memcpy(*target, source, 0x100 * sizeof (float));
     }
     return new_glyph;
 }
@@ -1033,10 +1033,12 @@ cleanup_stroker:
 
     int free_glyph = texture_font_index_glyph(self, glyph, ucodepoint);
     if(!glyph_index) {
-        if(!free_glyph) {
+      // SmodeTech: this 4 lines are commented since they cause unexplained double free crash and their utility is not obvious (dlrd/Smode-Issues#5266, point 4)
+        /*if (!free_glyph) {
             glyph = texture_glyph_clone(glyph);
         }
-        free_glyph = texture_font_index_glyph(self, glyph, 0);
+        free_glyph = texture_font_index_glyph(self, glyph, 0);*/
+      // ----
     }
     if(free_glyph) {
         // fprintf(stderr, "Free glyph\n");
